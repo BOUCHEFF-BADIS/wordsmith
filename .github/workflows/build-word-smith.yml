@@ -9,7 +9,6 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    steps:
     - uses: actions/checkout@v3
     - name: Build the Docker image
       run: docker build . --file db/Dockerfile --tag my-image-name:$(date +%s)
