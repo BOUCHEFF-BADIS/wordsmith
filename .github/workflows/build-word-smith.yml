@@ -33,7 +33,15 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
+      env :
+        DOCKERHUB_USERNAME : ${{ secrets.DOCKERHUB_USERNAME }}
+        DOCKERHUB_TOKEN : ${{ secrets.DOCKERHUB_TOKEN }}
+        IMAGE_NAME : wordsmith
+        TAG : web   
+      run :
+        echo $DOCKERGUB_TOKEN | docker login -u $DOCKERHUB_USERNAME --password-stdin
+        docker buildx create --use
+        docker buildx build --push --platform linux/amd64,linux/arm64 -t $DOCKERHUB_USERNAME/$IMAGE_NAME:$TAG
       working-directory: ./web
 
   build-words:
@@ -43,5 +51,13 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
+      env :
+        DOCKERHUB_USERNAME : ${{ secrets.DOCKERHUB_USERNAME }}
+        DOCKERHUB_TOKEN : ${{ secrets.DOCKERHUB_TOKEN }}
+        IMAGE_NAME : wordsmith
+        TAG : words    
+      run :
+        echo $DOCKERGUB_TOKEN | docker login -u $DOCKERHUB_USERNAME --password-stdin
+        docker buildx create --use
+        docker buildx build --push --platform linux/amd64,linux/arm64 -t $DOCKERHUB_USERNAME/$IMAGE_NAME:$TAG
       working-directory: ./words
