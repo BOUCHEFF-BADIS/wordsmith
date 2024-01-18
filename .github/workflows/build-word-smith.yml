@@ -6,7 +6,7 @@ on:
   pull_request:
     branches: [ "develop" ]
 jobs:
-  Explore-GitHub-Actions:
+  build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository code
